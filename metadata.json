@@ -1,6 +1,0 @@
-{
-  "name": "Masjid Finance Tracker",
-  "description": "பள்ளிவாசல் வருமானம் மற்றும் செலவுகளை கண்காணித்து அறிக்கை தயாரிக்கும் தளம் (Tamil Masjid Finance Tracker)",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
