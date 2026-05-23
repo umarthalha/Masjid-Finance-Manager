@@ -1,0 +1,158 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with personal and contact details, and current active masjid.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "User's display name"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "User's email address"
+        },
+        "phone": {
+          "type": "string",
+          "description": "User's phone number"
+        },
+        "activeMasjidId": {
+          "type": "string",
+          "description": "Currently active Masjid ID selected by user"
+        },
+        "createdAt": {
+          "type": "object",
+          "description": "Timestamp when user profile was created"
+        }
+      },
+      "required": ["name", "email", "createdAt"]
+    },
+    "Masjid": {
+      "title": "Masjid",
+      "description": "Represent a mosque profile added for finance tracking.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the mosque in Tamil"
+        },
+        "area": {
+          "type": "string",
+          "description": "Area/Location of the mosque in Tamil"
+        },
+        "createdBy": {
+          "type": "string",
+          "description": "User ID of the creator"
+        },
+        "createdAt": {
+          "type": "object",
+          "description": "Creation timestamp"
+        }
+      },
+      "required": ["name", "area", "createdBy", "createdAt"]
+    },
+    "FinanceEntry": {
+      "title": "FinanceEntry",
+      "description": "Income or expense financial entry for a masjid.",
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["income", "expense"],
+          "description": "Type of the entry: income or expense"
+        },
+        "date": {
+          "type": "string",
+          "format": "date",
+          "description": "Selected entry date format YYYY-MM-DD"
+        },
+        "category": {
+          "type": "string",
+          "description": "Category name in Tamil"
+        },
+        "amount": {
+          "type": "number",
+          "description": "Positive amount of transaction"
+        },
+        "description": {
+          "type": "string",
+          "description": "Optional details about the entry"
+        },
+        "createdAt": {
+          "type": "object",
+          "description": "Firestore server timestamp of entry creation"
+        },
+        "month": {
+          "type": "string",
+          "description": "Format YYYY-MM for monthly filtering"
+        },
+        "year": {
+          "type": "string",
+          "description": "Format YYYY for yearly filtering"
+        },
+        "quarter": {
+          "type": "string",
+          "description": "Format Q1/Q2/Q3/Q4-YYYY for quarterly filtering"
+        },
+        "masjidId": {
+          "type": "string",
+          "description": "The ID of the Masjid this entry belongs to"
+        },
+        "userId": {
+          "type": "string",
+          "description": "The ID of the user who made the entry"
+        }
+      },
+      "required": ["type", "date", "category", "amount", "createdAt", "month", "year", "quarter", "masjidId", "userId"]
+    },
+    "TempCategory": {
+      "title": "TempCategory",
+      "description": "Temporary category added for the current month and masjid.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Category name"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["income", "expense"],
+          "description": "Income or expense type"
+        },
+        "month": {
+          "type": "string",
+          "description": "Format YYYY-MM"
+        },
+        "createdAt": {
+          "type": "object",
+          "description": "Creation timestamp"
+        },
+        "masjidId": {
+          "type": "string",
+          "description": "The ID of the Masjid this category belongs to"
+        }
+      },
+      "required": ["name", "type", "month", "createdAt", "masjidId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles which contain contact details and active masjid selection."
+    },
+    "/masjids/{masjidId}": {
+      "schema": "Masjid",
+      "description": "Masjid listings registered in the application."
+    },
+    "/entries/{entryId}": {
+      "schema": "FinanceEntry",
+      "description": "Income and expense transactions belonging to a masjid."
+    },
+    "/temp_categories/{categoryId}": {
+      "schema": "TempCategory",
+      "description": "Temporary custom categories belonging to a masjid for a specific month."
+    }
+  }
+}
